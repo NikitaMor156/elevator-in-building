@@ -2,17 +2,22 @@ package com.gmail.mor.elevator.entiy;
 
 import com.gmail.mor.elevator.constants.AppManager;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Component("elevatorBean")
 public class Elevator {
 
     private int position;
     private List<Passenger> passengerList;
     private int maxSize;
     private boolean isGoingUp = true;
+    @Autowired
+    Building building;
 
     public Elevator() {
         passengerList = new ArrayList<>();
@@ -55,13 +60,23 @@ public class Elevator {
         }
     }
 
-    private void dropOffPassengers(){
+    public void dropOffPassengers(){
         for (Passenger p : passengerList){
             if (p.getDestinationFloor() == p.getPosition()){
-
+                building.getFloorList().get(position).getPassengerList().add(p);
+                passengerList.remove(p);
             }
         }
     }
 
-
+    @Override
+    public String toString() {
+        return "Elevator{" +
+                "position=" + position +
+                ", passengerList=" + passengerList +
+                ", maxSize=" + maxSize +
+                ", isGoingUp=" + isGoingUp +
+                ", building=" + "AVOID OF DEATH LOOP CAUSED BY CIRCULAR DEPENDENCY!" +
+                '}';
+    }
 }

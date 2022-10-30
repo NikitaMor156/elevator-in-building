@@ -25,6 +25,7 @@ public class FrontEndMaker {
             }
             System.out.println();
         }
+        System.out.println("----------------------------------------------------");
     }
 
 }
