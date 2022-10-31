@@ -46,9 +46,11 @@ public class Building {
 
     public void start() {
         while (!isProcedureDone()) {
-            elevator.dropOffPassengers();
-            elevator.move();
             FrontEndMaker.printBuilding(this);
+            FrontEndMaker.writeFrontEndToLogFile(this);
+            elevator.dropOffPassengers();
+            elevator.takePassengers();
+            elevator.move();
             //TODO
         }
     }

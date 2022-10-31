@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 public class Passenger {
 
     private int destinationFloor;
-    private boolean isOnDestinationFloor = false;
+    //private boolean isOnDestinationFloor = false;
     private int position;
 
     public Passenger(int position) {

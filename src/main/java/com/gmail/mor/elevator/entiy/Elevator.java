@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Component("elevatorBean")
@@ -14,7 +15,7 @@ public class Elevator {
 
     private int position;
     private List<Passenger> passengerList;
-    private int maxSize;
+    private final int maxSize = AppManager.ELEVATOR_MAX_COUNT;
     private boolean isGoingUp = true;
     @Autowired
     Building building;
@@ -26,7 +27,7 @@ public class Elevator {
 
     //Can we take this passenger onboard?
     public boolean canTakePassenger(Passenger passenger) {
-        if (passengerList.size() == maxSize) {
+        if (passengerList.size() >= maxSize) {
             return false;
         }
         if (isGoingUp && passenger.getDestinationFloor() > position) {
@@ -45,7 +46,7 @@ public class Elevator {
         } else {
             position--;
         }
-        for (Passenger p : passengerList){
+        for (Passenger p : passengerList) {
             p.setPosition(position);
         }
     }
@@ -60,13 +61,36 @@ public class Elevator {
         }
     }
 
-    public void dropOffPassengers(){
-        for (Passenger p : passengerList){
-            if (p.getDestinationFloor() == p.getPosition()){
-                building.getFloorList().get(position).getPassengerList().add(p);
-                passengerList.remove(p);
+    public void dropOffPassengers() {
+        for (int i = 0; i < passengerList.size(); i++) {
+            Passenger pas = passengerList.get(i);
+            if (pas.getDestinationFloor() == pas.getPosition()) {
+                building.getFloorList().get(position).getPassengerList().add(pas);
+                this.passengerList.remove(pas);
             }
         }
+
+    }
+
+    //NOT WORKING!!!
+    public void takePassengers() {
+        List<Passenger> floorPassengers = building.getFloorList().get(position).getPassengerList();
+
+        /*for (Passenger p : floorPassengers) {
+            if (canTakePassenger(p)) {
+                passengerList.add(p);
+                floorPassengers.remove(p);
+            }
+        }*/
+        for (int i = 0; i < floorPassengers.size(); i++) {
+            Passenger pas = floorPassengers.get(i);
+            if (canTakePassenger(pas)) {
+                passengerList.add(pas);
+                floorPassengers.set(i,null);
+            }
+        }
+        //delete null elements
+        floorPassengers.removeIf(Objects::isNull);
     }
 
     @Override

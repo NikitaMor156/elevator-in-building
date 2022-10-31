@@ -8,10 +8,10 @@ import java.util.List;
 
 public class EntityGenerator {
 
-    public static List<Passenger> generatePassengersList(int count) {
+    public static List<Passenger> generatePassengersList(int count, int floorPositionNibmer) {
         List<Passenger> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            result.add(new Passenger(i));
+            result.add(new Passenger(floorPositionNibmer));
         }
         return result;
     }

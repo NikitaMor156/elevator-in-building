@@ -2,6 +2,7 @@ package com.gmail.mor.elevator;
 
 import com.gmail.mor.elevator.entiy.Building;
 import com.gmail.mor.elevator.entiy.Elevator;
+import com.gmail.mor.elevator.entiy.FrontEndMaker;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -12,10 +13,12 @@ public class ElevatorApplication {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.register(Building.class);
         context.register(Elevator.class);
+        context.register(FrontEndMaker.class);
         context.refresh();
 
         Building building = context.getBean("buildingBean", Building.class);
         building.start();
+        System.out.println("Done!");
 
     }
 
