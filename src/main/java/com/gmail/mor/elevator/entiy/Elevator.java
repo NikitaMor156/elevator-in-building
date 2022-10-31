@@ -40,7 +40,10 @@ public class Elevator {
     }
 
     public void move() {
-        changeDirectionOfMoveIfItIsNecessary();
+        if (changeDirectionOfMoveIfItIsNecessary()){
+            dropOffPassengers();
+            takePassengers();
+        }
         if (isGoingUp) {
             position++;
         } else {
@@ -51,14 +54,18 @@ public class Elevator {
         }
     }
 
-    private void changeDirectionOfMoveIfItIsNecessary() {
+    private boolean changeDirectionOfMoveIfItIsNecessary() {
         //Elevator is on 1-st floor
         if (position == 0) {
             isGoingUp = true;
+            return true;
         }
+        //Elevator is on last floor
         if (position == AppManager.FLOOR_COUNT - 1) {
             isGoingUp = false;
+            return true;
         }
+        return false;
     }
 
     public void dropOffPassengers() {
