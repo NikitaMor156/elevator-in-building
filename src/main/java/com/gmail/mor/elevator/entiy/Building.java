@@ -37,9 +37,7 @@ public class Building {
     public List<Passenger> getAllPassengers() {
         List<Passenger> result = new ArrayList<>();
         for (Floor f : floorList) {
-            for (Passenger p : f.getPassengerList()) {
-                result.add(p);
-            }
+            result.addAll(f.getPassengerList());
         }
         return result;
     }
@@ -51,8 +49,9 @@ public class Building {
             elevator.dropOffPassengers();
             elevator.takePassengers();
             elevator.move();
-            //TODO
         }
+        FrontEndMaker.printBuilding(this);
+        FrontEndMaker.writeFrontEndToLogFile(this);
     }
 
     @Override
