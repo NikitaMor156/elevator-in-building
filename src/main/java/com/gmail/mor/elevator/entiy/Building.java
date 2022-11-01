@@ -31,7 +31,7 @@ public class Building {
                 break;
             }
         }
-        return isDone;
+        return isDone && elevator.getPassengerList().isEmpty();
     }
 
     public List<Passenger> getAllPassengers() {
