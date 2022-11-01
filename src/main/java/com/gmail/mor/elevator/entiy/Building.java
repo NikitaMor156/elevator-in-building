@@ -42,6 +42,14 @@ public class Building {
         return result;
     }
 
+    public List<Passenger> getFloorPassengers(int index){
+        return floorList.get(index).getPassengerList();
+    }
+
+    public Floor getFloor(int index){
+        return floorList.get(index);
+    }
+
     public void start() {
         while (!areAllPassengersOnTheirDestinationFloors()) {
             FrontEndMaker.printBuilding(this);

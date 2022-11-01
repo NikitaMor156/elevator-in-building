@@ -21,8 +21,16 @@ public class Floor {
         updatePressedButtons();
     }
 
-    public void putPassenger(Passenger passenger) {
+    public void addPassenger(Passenger passenger) {
         passengerList.add(passenger);
+    }
+
+    public void removePassenger(Passenger passenger){
+        passengerList.remove(passenger);
+    }
+
+    public void removePassenger(int index){
+        passengerList.remove(index);
     }
 
     public void updatePressedButtons() {

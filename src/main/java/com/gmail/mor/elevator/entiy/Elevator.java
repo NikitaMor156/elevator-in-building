@@ -40,7 +40,7 @@ public class Elevator {
     }
 
     public void move() {
-        if (changeDirectionOfMoveIfItIsNecessary()){
+        if (changeDirectionOfMoveIfItIsNecessary()) {
             dropOffPassengers();
             takePassengers();
         }
@@ -72,21 +72,19 @@ public class Elevator {
         for (int i = 0; i < passengerList.size(); i++) {
             Passenger pas = passengerList.get(i);
             if (pas.getDestinationFloor() == pas.getPosition()) {
-                building.getFloorList().get(position).getPassengerList().add(pas);
+                building.getFloor(position).addPassenger(pas);
                 this.passengerList.remove(pas);
             }
         }
-
     }
 
-    //NOT WORKING!!!
     public void takePassengers() {
-        List<Passenger> floorPassengers = building.getFloorList().get(position).getPassengerList();
+        List<Passenger> floorPassengers = building.getFloor(position).getPassengerList();
         for (int i = 0; i < floorPassengers.size(); i++) {
             Passenger pas = floorPassengers.get(i);
             if (canTakePassenger(pas)) {
                 passengerList.add(pas);
-                floorPassengers.set(i,null);
+                floorPassengers.set(i, null);
             }
         }
         //delete null elements
