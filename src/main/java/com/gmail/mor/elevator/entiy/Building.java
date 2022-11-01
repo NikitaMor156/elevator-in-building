@@ -58,8 +58,10 @@ public class Building {
         while (!areAllPassengersOnTheirDestinationFloors()) {
             FrontEndMaker.printBuilding(this);
             FrontEndMaker.writeFrontEndToLogFile(this);
+            elevator.changeDirectionOfMoveIfItIsNecessary();
             elevator.dropAndPickUpPassengers();
             elevator.move();
+            System.out.println(elevator.getPosition());
         }
         FrontEndMaker.printBuilding(this);
         FrontEndMaker.writeFrontEndToLogFile(this);

@@ -13,6 +13,7 @@ import java.util.Objects;
 @Component("elevatorBean")
 public class Elevator {
 
+    //Баг с position!!!
     private int position;
     private List<Passenger> passengerList;
     private final int maxSize = AppManager.ELEVATOR_CAPACITY;
@@ -55,6 +56,7 @@ public class Elevator {
         }
     }
 
+    //TODO BUG
     //Returns true if elevator is called from above
     //(If the relevant call button pressed on the floor which is above the elevator.
     //That pressed button must have the same direction as elevator move direction, otherwise it will be ignored).
@@ -71,12 +73,18 @@ public class Elevator {
 //            }
 //        }
 //        return false;
-        if (position == AppManager.FLOOR_COUNT - 1){
+        if (position >= AppManager.FLOOR_COUNT - 1) {
             return false;
         }
         List<Floor> floorsAbove = building.getFloors(position + 1, AppManager.FLOOR_COUNT - 1);
         for (Floor fl : floorsAbove) {
             if (fl.hasPassengersToTake()) {
+                return true;
+            }
+        }
+        //Если кто-то из пассажиров лифта хочет наверх
+        for (Passenger pas : passengerList) {
+            if (pas.getDestinationFloor() > position) {
                 return true;
             }
         }
@@ -99,7 +107,7 @@ public class Elevator {
 //            }
 //        }
 //        return false;
-        if (position == 0){
+        if (position <= 0) {
             return false;
         }
         List<Floor> floorsBelow = building.getFloors(0, position - 1);
@@ -108,10 +116,15 @@ public class Elevator {
                 return true;
             }
         }
+        for (Passenger pas : passengerList) {
+            if (pas.getDestinationFloor() < position) {
+                return true;
+            }
+        }
         return false;
     }
 
-    private boolean changeDirectionOfMoveIfItIsNecessary() {
+    /*private boolean changeDirectionOfMoveIfItIsNecessary() {
         //Elevator is on 1-st floor or not called from below
         if (position == 0) {
             isGoingUp = true;
@@ -123,13 +136,27 @@ public class Elevator {
             return true;
         }
         return false;
+    }*/
+    //bug
+    public void changeDirectionOfMoveIfItIsNecessary() {
+        if (position == 0) {
+            isGoingUp = true;
+        }
+        if (position == AppManager.FLOOR_COUNT - 1) {
+            isGoingUp = false;
+        }
+        if (isGoingUp && !isCalledFromAbove()) {
+            isGoingUp = false;
+        }
+        if (!isGoingUp && !isCalledFromBelow()) {
+            isGoingUp = true;
+        }
+
     }
 
     public void dropAndPickUpPassengers() {
-        changeDirectionOfMoveIfItIsNecessary();
         dropOffPassengers();
         takePassengers();
-
     }
 
     private void dropOffPassengers() {
@@ -137,14 +164,14 @@ public class Elevator {
             Passenger pas = passengerList.get(i);
             if (pas.getDestinationFloor() == pas.getPosition()) {
                 building.getFloor(position).addPassenger(pas);
-                this.passengerList.remove(pas);
+                this.passengerList.set(i,null);
             }
         }
+        passengerList.removeIf(Objects::isNull);
     }
 
     private void takePassengers() {
         List<Passenger> floorPassengers = building.getFloor(position).getPassengerList();
-
         for (int i = 0; i < floorPassengers.size(); i++) {
             Passenger pas = floorPassengers.get(i);
             if (canTakePassenger(pas)) {
