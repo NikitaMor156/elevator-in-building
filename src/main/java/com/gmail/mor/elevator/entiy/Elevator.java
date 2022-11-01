@@ -40,10 +40,11 @@ public class Elevator {
     }
 
     public void move() {
-        if (changeDirectionOfMoveIfItIsNecessary()) {
-            dropOffPassengers();
-            takePassengers();
+        //If all passengers are on their places than elevator doesn't move
+        if (building.areAllPassengersOnTheirDestinationFloors()) {
+            return;
         }
+
         if (isGoingUp) {
             position++;
         } else {
@@ -54,13 +55,69 @@ public class Elevator {
         }
     }
 
+    //Returns true if elevator is called from above
+    //(If the relevant call button pressed on the floor which is above the elevator.
+    //That pressed button must have the same direction as elevator move direction, otherwise it will be ignored).
+    private boolean isCalledFromAbove() {
+//        //If elevator on the last floor
+//        if (position == AppManager.FLOOR_COUNT){
+//            return false;
+//        }
+//
+//        List<Floor> floorsAbove = building.getFloors(position + 1, AppManager.FLOOR_COUNT - 1);
+//        for (Floor fl : floorsAbove){
+//            if (fl.isUppButtonPressed()){
+//                return true;
+//            }
+//        }
+//        return false;
+        if (position == AppManager.FLOOR_COUNT - 1){
+            return false;
+        }
+        List<Floor> floorsAbove = building.getFloors(position + 1, AppManager.FLOOR_COUNT - 1);
+        for (Floor fl : floorsAbove) {
+            if (fl.hasPassengersToTake()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Returns true if elevator is called from below
+    //(If the relevant call button pressed on the floor which is below the elevator.
+    //That pressed button must have the same direction as elevator move direction, otherwise it will be ignored).
+    private boolean isCalledFromBelow() {
+//        //If elevator on the last floor
+//        if (position == 0) {
+//            return false;
+//        }
+//
+//        List<Floor> floorsBelow = building.getFloors(position - 1, 0);
+//        for (Floor fl : floorsBelow) {
+//            if (fl.isDownButtonPressed()) {
+//                return true;
+//            }
+//        }
+//        return false;
+        if (position == 0){
+            return false;
+        }
+        List<Floor> floorsBelow = building.getFloors(0, position - 1);
+        for (Floor fl : floorsBelow) {
+            if (fl.hasPassengersToTake()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean changeDirectionOfMoveIfItIsNecessary() {
-        //Elevator is on 1-st floor
+        //Elevator is on 1-st floor or not called from below
         if (position == 0) {
             isGoingUp = true;
             return true;
         }
-        //Elevator is on last floor
+        //Elevator is on last floor or is not called from above
         if (position == AppManager.FLOOR_COUNT - 1) {
             isGoingUp = false;
             return true;
@@ -68,7 +125,14 @@ public class Elevator {
         return false;
     }
 
-    public void dropOffPassengers() {
+    public void dropAndPickUpPassengers() {
+        changeDirectionOfMoveIfItIsNecessary();
+        dropOffPassengers();
+        takePassengers();
+
+    }
+
+    private void dropOffPassengers() {
         for (int i = 0; i < passengerList.size(); i++) {
             Passenger pas = passengerList.get(i);
             if (pas.getDestinationFloor() == pas.getPosition()) {
@@ -78,8 +142,9 @@ public class Elevator {
         }
     }
 
-    public void takePassengers() {
+    private void takePassengers() {
         List<Passenger> floorPassengers = building.getFloor(position).getPassengerList();
+
         for (int i = 0; i < floorPassengers.size(); i++) {
             Passenger pas = floorPassengers.get(i);
             if (canTakePassenger(pas)) {

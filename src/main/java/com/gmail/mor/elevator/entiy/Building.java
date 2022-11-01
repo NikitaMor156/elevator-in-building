@@ -50,12 +50,15 @@ public class Building {
         return floorList.get(index);
     }
 
+    public List<Floor> getFloors(int fromIndex, int toIndex){
+        return floorList.subList(fromIndex, toIndex);
+    }
+
     public void start() {
         while (!areAllPassengersOnTheirDestinationFloors()) {
             FrontEndMaker.printBuilding(this);
             FrontEndMaker.writeFrontEndToLogFile(this);
-            elevator.dropOffPassengers();
-            elevator.takePassengers();
+            elevator.dropAndPickUpPassengers();
             elevator.move();
         }
         FrontEndMaker.printBuilding(this);
