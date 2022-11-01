@@ -15,7 +15,7 @@ public class Elevator {
 
     private int position;
     private List<Passenger> passengerList;
-    private final int maxSize = AppManager.ELEVATOR_MAX_COUNT;
+    private final int maxSize = AppManager.ELEVATOR_CAPACITY;
     private boolean isGoingUp = true;
     @Autowired
     Building building;
@@ -82,13 +82,6 @@ public class Elevator {
     //NOT WORKING!!!
     public void takePassengers() {
         List<Passenger> floorPassengers = building.getFloorList().get(position).getPassengerList();
-
-        /*for (Passenger p : floorPassengers) {
-            if (canTakePassenger(p)) {
-                passengerList.add(p);
-                floorPassengers.remove(p);
-            }
-        }*/
         for (int i = 0; i < floorPassengers.size(); i++) {
             Passenger pas = floorPassengers.get(i);
             if (canTakePassenger(pas)) {

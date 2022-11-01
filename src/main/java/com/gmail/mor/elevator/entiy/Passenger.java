@@ -9,17 +9,10 @@ import javax.annotation.PostConstruct;
 public class Passenger {
 
     private int destinationFloor;
-    //private boolean isOnDestinationFloor = false;
     private int position;
 
     public Passenger(int position) {
         this.position = position;
         this.destinationFloor = (int) (Math.random() * AppManager.FLOOR_COUNT);
     }
-
-//    @PostConstruct
-//    private void init(){
-//        this.destinationFloor =(int) (Math.random() * AppManager.FLOOR_COUNT + 1);
-//    }
-
 }

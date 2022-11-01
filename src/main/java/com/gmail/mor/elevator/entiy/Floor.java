@@ -26,11 +26,11 @@ public class Floor {
     }
 
     public void updatePressedButtons() {
-        for(Passenger passenger : passengerList){
-            if (passenger.getDestinationFloor() > number){
+        for (Passenger passenger : passengerList) {
+            if (passenger.getDestinationFloor() > number) {
                 isUppButtonPressed = true;
             }
-            if (passenger.getDestinationFloor() < number){
+            if (passenger.getDestinationFloor() < number) {
                 isDownButtonPressed = true;
             }
         }

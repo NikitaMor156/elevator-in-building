@@ -13,37 +13,28 @@ import java.util.List;
 @Data
 @Component
 public class FrontEndMaker {
+    private static final String OUTPUT_FILE_NAME = "log.txt";
 
+    //Make log file empty before every program run
     @PostConstruct
-    public void init(){
-        clearFile("log.txt");
+    public void init() {
+        clearFile(OUTPUT_FILE_NAME);
     }
 
     public static void printBuilding(Building building) {
-        List<Floor> floorList = building.getFloorList();
-        //for (int i = 0; i < floorList.size(); i++) {
-        for (int i = floorList.size() - 1; i >= 0; i--) {
-            if (building.getElevator().getPosition() == i) {
-                if (building.getElevator().isGoingUp()) {
-                    System.out.print("^");
-                } else {
-                    System.out.print("-");
-                }
-            } else {
-                System.out.print(" ");
-            }
-            System.out.print("|" + (i + 1) + "-st fl.| ");
-            for (Passenger p : floorList.get(i).getPassengerList()) {
-                System.out.print("p(" + (p.getDestinationFloor() + 1) + ") ");
-            }
-            System.out.println();
+        System.out.print(getProgramOutputString(building));
+    }
+    
+    public static void writeFrontEndToLogFile(Building building) {
+        try {
+            Files.write(Paths.get(OUTPUT_FILE_NAME),
+                    getProgramOutputString(building).getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        System.out.println("elev.: " + building.getElevator().getPassengerList());
-        System.out.println("----------------------------------------------------");
     }
 
-    //Writo to log file
-    public static void writeFrontEndToLogFile(Building building) {
+    public static String getProgramOutputString(Building building) {
         List<Floor> floorList = building.getFloorList();
         StringBuilder sb = new StringBuilder();
         for (int i = floorList.size() - 1; i >= 0; i--) {
@@ -56,26 +47,28 @@ public class FrontEndMaker {
             } else {
                 sb.append(" ");
             }
-            sb.append("|").append(i + 1).append("-st fl.| ");
+            sb.append("|")
+                    .append(i + 1)
+                    .append("-st fl.| ");
             for (Passenger p : floorList.get(i).getPassengerList()) {
-                sb.append("p(").append(p.getDestinationFloor() + 1).append(") ");
+                sb.append("p(")
+                        .append(p.getDestinationFloor() + 1)
+                        .append(") ");
             }
             sb.append(System.lineSeparator());
         }
-        sb.append("elev.: ").append(building.getElevator().getPassengerList()).append(System.lineSeparator());
-        sb.append("----------------------------------------------------");
-        sb.append(System.lineSeparator());
-        try {
-            Files.write(Paths.get("log.txt"), sb.toString().getBytes(), StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        sb.append("elev.: ")
+                .append(building.getElevator().getPassengerList())
+                .append(System.lineSeparator())
+                .append("----------------------------------------------------")
+                .append(System.lineSeparator());
+        return sb.toString();
     }
 
-    public void clearFile(String fileName) {
-        try (var writer =new PrintWriter(fileName)){
+    private void clearFile(String fileName) {
+        try (var writer = new PrintWriter(fileName)) {
             writer.print("");
-        } catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 

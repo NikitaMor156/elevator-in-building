@@ -2,7 +2,6 @@ package com.gmail.mor.elevator.entiy;
 
 import com.gmail.mor.elevator.EntityGenerator;
 import com.gmail.mor.elevator.constants.AppManager;
-import com.gmail.mor.elevator.entiy.Floor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ public class Building {
         floorList = EntityGenerator.generateFloorList(AppManager.FLOOR_COUNT);
     }
 
-    public boolean isProcedureDone() {
+    public boolean areAllPassengersOnTheirDestinationFloors() {
         boolean isDone = true;
         List<Passenger> allPassengers = getAllPassengers();
         for (Passenger p : allPassengers) {
@@ -39,11 +38,12 @@ public class Building {
         for (Floor f : floorList) {
             result.addAll(f.getPassengerList());
         }
+        result.addAll(elevator.getPassengerList());
         return result;
     }
 
     public void start() {
-        while (!isProcedureDone()) {
+        while (!areAllPassengersOnTheirDestinationFloors()) {
             FrontEndMaker.printBuilding(this);
             FrontEndMaker.writeFrontEndToLogFile(this);
             elevator.dropOffPassengers();
