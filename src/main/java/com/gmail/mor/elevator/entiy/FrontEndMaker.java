@@ -10,10 +10,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
+//
 @Data
 @Component
 public class FrontEndMaker {
-    private static final String OUTPUT_FILE_NAME = "log.txt";
+    public static final String OUTPUT_FILE_NAME = "log.txt";
 
     //Make log file empty before every program run
     @PostConstruct

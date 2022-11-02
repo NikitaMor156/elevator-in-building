@@ -6,9 +6,13 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+//Building is class which contains list of Floor objects where passengers are and Elevator
+//object which provides transportation of passengers after start() method of Building class is executed
 @Data
 @Component("buildingBean")
 public class Building {
@@ -71,7 +75,9 @@ public class Building {
         return result;
     }
 
-    //Starts elevator
+    //Starts elevator.
+    //Provides transportation of passengers between floors.
+    //Starts frontend part of application (console output + file output)
     public void start() {
         while (!areAllPassengersOnTheirDestinationFloors()) {
             FrontEndMaker.printBuilding(this);
@@ -80,10 +86,14 @@ public class Building {
             elevator.dropAndPickUpPassengers();
             elevator.changeDirectionOfMoveIfItIsNecessary();
             elevator.move();
-            System.out.println(elevator.getPosition() + " - EL position");
         }
         FrontEndMaker.printBuilding(this);
         FrontEndMaker.writeFrontEndToLogFile(this);
+
+        System.out.println(">>> ATTENTION! <<<");
+        System.out.println("The output can be found also in txt file on path:"
+                + new File(FrontEndMaker.OUTPUT_FILE_NAME).getAbsolutePath());
+
     }
 
     @Override
