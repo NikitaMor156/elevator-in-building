@@ -13,16 +13,23 @@ import java.util.List;
 @Component("buildingBean")
 public class Building {
 
+    //List of floors in this building
     private List<Floor> floorList;
 
+    //Elevator of this building
     @Autowired
     private Elevator elevator;
 
     public Building() {
-
+        //Generate random count of floors (floor list).
+        //This floors will be automatically filled with random count of passengers.
         floorList = EntityGenerator.generateFloorList(AppManager.FLOOR_COUNT);
     }
 
+    //Returns true if all passengers floor position is equal to destination.
+    //That means that all passengers which are in the building used to get to their
+    //destination floors and elevator is empty.
+    //Otherwise, returns false.
     public boolean areAllPassengersOnTheirDestinationFloors() {
         boolean isDone = true;
         List<Passenger> allPassengers = getAllPassengers();
@@ -35,6 +42,7 @@ public class Building {
         return isDone && elevator.getPassengerList().isEmpty();
     }
 
+    //Returns list of all passengers which are present in the building and elevator.
     public List<Passenger> getAllPassengers() {
         List<Passenger> result = new ArrayList<>();
         for (Floor f : floorList) {
@@ -44,14 +52,17 @@ public class Building {
         return result;
     }
 
+    //Returns list of all passengers from current floor
     public List<Passenger> getFloorPassengers(int index) {
         return floorList.get(index).getPassengerList();
     }
 
+    //Returns Floor object by index
     public Floor getFloor(int index) {
         return floorList.get(index);
     }
 
+    //Returns list of Floor objects from fromIndex to toIndex (inclusive)
     public List<Floor> getFloors(int fromIndex, int toIndex) {
         List<Floor> result = new ArrayList<>();
         for (int i = fromIndex; i <= toIndex; i++) {
@@ -60,6 +71,7 @@ public class Building {
         return result;
     }
 
+    //Starts elevator
     public void start() {
         while (!areAllPassengersOnTheirDestinationFloors()) {
             FrontEndMaker.printBuilding(this);
