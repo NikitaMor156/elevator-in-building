@@ -53,8 +53,6 @@ public class FrontEndMaker {
             for (Passenger p : floorList.get(i).getPassengerList()) {
                 sb.append("p(")
                         .append(p.getDestinationFloor() + 1)
-                        .append(",")
-                        .append(p.getPosition() + 1)
                         .append(") ");
             }
             sb.append(System.lineSeparator());

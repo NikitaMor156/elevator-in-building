@@ -42,26 +42,31 @@ public class Building {
         return result;
     }
 
-    public List<Passenger> getFloorPassengers(int index){
+    public List<Passenger> getFloorPassengers(int index) {
         return floorList.get(index).getPassengerList();
     }
 
-    public Floor getFloor(int index){
+    public Floor getFloor(int index) {
         return floorList.get(index);
     }
 
-    public List<Floor> getFloors(int fromIndex, int toIndex){
-        return floorList.subList(fromIndex, toIndex);
+    public List<Floor> getFloors(int fromIndex, int toIndex) {
+        List<Floor> result = new ArrayList<>();
+        for (int i = fromIndex; i <= toIndex; i++) {
+            result.add(floorList.get(i));
+        }
+        return result;
     }
 
     public void start() {
         while (!areAllPassengersOnTheirDestinationFloors()) {
             FrontEndMaker.printBuilding(this);
             FrontEndMaker.writeFrontEndToLogFile(this);
-            elevator.changeDirectionOfMoveIfItIsNecessary();
+
             elevator.dropAndPickUpPassengers();
+            elevator.changeDirectionOfMoveIfItIsNecessary();
             elevator.move();
-            System.out.println(elevator.getPosition());
+            System.out.println(elevator.getPosition() + " - EL position");
         }
         FrontEndMaker.printBuilding(this);
         FrontEndMaker.writeFrontEndToLogFile(this);
