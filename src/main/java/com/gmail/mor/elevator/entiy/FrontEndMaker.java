@@ -24,7 +24,7 @@ public class FrontEndMaker {
     public static void printBuilding(Building building) {
         System.out.print(getProgramOutputString(building));
     }
-    
+
     public static void writeFrontEndToLogFile(Building building) {
         try {
             Files.write(Paths.get(OUTPUT_FILE_NAME),
@@ -57,8 +57,17 @@ public class FrontEndMaker {
             }
             sb.append(System.lineSeparator());
         }
-        sb.append("elev.: ")
-                .append(building.getElevator().getPassengerList())
+        sb.append("elevator passengers: [");
+        //.append(building.getElevator().getPassengerList())
+        for (Passenger pas : building.getElevator().getPassengerList()) {
+            sb.append("p(")
+                    .append(pas.getDestinationFloor())
+                    .append("), ");
+        }
+        if (!building.getElevator().isEmpty()) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+        sb.append("]")
                 .append(System.lineSeparator())
                 .append("----------------------------------------------------")
                 .append(System.lineSeparator());

@@ -14,10 +14,12 @@ import java.util.List;
 public class Building {
 
     private List<Floor> floorList;
+
     @Autowired
     private Elevator elevator;
 
     public Building() {
+
         floorList = EntityGenerator.generateFloorList(AppManager.FLOOR_COUNT);
     }
 

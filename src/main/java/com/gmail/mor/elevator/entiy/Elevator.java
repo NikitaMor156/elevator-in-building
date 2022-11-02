@@ -145,6 +145,10 @@ public class Elevator {
         floorPassengers.removeIf(Objects::isNull);
     }
 
+    public boolean isEmpty(){
+        return passengerList.isEmpty();
+    }
+
     @Override
     public String toString() {
         return "Elevator{" +
