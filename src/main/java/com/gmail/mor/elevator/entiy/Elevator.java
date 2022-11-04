@@ -13,7 +13,6 @@ import java.util.Objects;
 @Component("elevatorBean")
 public class Elevator {
 
-    //Баг с position!!!
     private int position;
     private List<Passenger> passengerList;
     private final int maxSize = AppManager.ELEVATOR_CAPACITY;
@@ -56,7 +55,6 @@ public class Elevator {
         }
     }
 
-    //TODO BUG
     //Returns true if elevator is called from above
     //(If the relevant call button pressed on the floor which is above the elevator.
     //That pressed button must have the same direction as elevator move direction, otherwise it will be ignored).

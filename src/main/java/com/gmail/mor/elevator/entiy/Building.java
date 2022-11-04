@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,15 +79,15 @@ public class Building {
     //Starts frontend part of application (console output + file output)
     public void start() {
         while (!areAllPassengersOnTheirDestinationFloors()) {
-            FrontEndMaker.printBuilding(this);
-            FrontEndMaker.writeFrontEndToLogFile(this);
+            FrontEndMaker.printBuildingStateToConsole(this);
+            FrontEndMaker.printBuildingStateToFile(this);
 
             elevator.dropAndPickUpPassengers();
             elevator.changeDirectionOfMoveIfItIsNecessary();
             elevator.move();
         }
-        FrontEndMaker.printBuilding(this);
-        FrontEndMaker.writeFrontEndToLogFile(this);
+        FrontEndMaker.printBuildingStateToConsole(this);
+        FrontEndMaker.printBuildingStateToFile(this);
 
         System.out.println(">>> ATTENTION! <<<");
         System.out.println("The output can be found also in txt file on path:"
