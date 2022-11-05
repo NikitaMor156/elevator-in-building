@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 @Data
 public class Passenger {
 
-    //Passenger destination floor
+    //Passenger destination floor where he needs to get
     private int destinationFloor;
 
     //Constructor

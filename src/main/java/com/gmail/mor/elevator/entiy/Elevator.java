@@ -46,10 +46,18 @@ public class Elevator {
         }
 
         if (isGoingUp) {
-            position++;
+            moveUp();
         } else {
-            position--;
+            moveDown();
         }
+    }
+
+    private void moveUp() {
+        position++;
+    }
+
+    private void moveDown() {
+        position--;
     }
 
     //Returns true if elevator is called from above
@@ -121,7 +129,7 @@ public class Elevator {
             Passenger pas = passengerList.get(i);
             if (pas.getDestinationFloor() == this.position) {
                 building.getFloor(position).addPassenger(pas);
-                this.passengerList.set(i,null);
+                this.passengerList.set(i, null);
             }
         }
         passengerList.removeIf(Objects::isNull);
@@ -140,7 +148,7 @@ public class Elevator {
         floorPassengers.removeIf(Objects::isNull);
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return passengerList.isEmpty();
     }
 

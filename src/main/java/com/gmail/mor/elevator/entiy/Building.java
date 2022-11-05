@@ -79,6 +79,7 @@ public class Building {
     //Starts elevator.
     //Provides transportation of passengers between floors.
     //Starts frontend part of application (console output + file output)
+    //TODO Вынести этот метод в отдельный класс
     public void start() {
         while (!areAllPassengersOnTheirDestinationFloors()) {
             BuildingStatePrinter.printBuildingStateToConsole(this);
