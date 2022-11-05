@@ -131,7 +131,7 @@ public class Elevator {
     }
 
     private void takePassengers() {
-        List<Passenger> floorPassengers = building.getFloor(position).getPassengerList();
+        List<Passenger> floorPassengers = building.getFloor(position).getPassengers();
         for (int i = 0; i < floorPassengers.size(); i++) {
             Passenger pas = floorPassengers.get(i);
             if (canTakePassenger(pas)) {

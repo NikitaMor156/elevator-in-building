@@ -49,7 +49,7 @@ public class Building {
     public List<Passenger> getAllPassengers() {
         List<Passenger> result = new ArrayList<>();
         for (Floor f : floorList) {
-            result.addAll(f.getPassengerList());
+            result.addAll(f.getPassengers());
         }
         result.addAll(elevator.getPassengerList());
         return result;
@@ -57,7 +57,7 @@ public class Building {
 
     //Returns list of all passengers from current floor
     public List<Passenger> getFloorPassengers(int index) {
-        return floorList.get(index).getPassengerList();
+        return floorList.get(index).getPassengers();
     }
 
     //Returns Floor object by index
@@ -79,19 +79,19 @@ public class Building {
     //Starts frontend part of application (console output + file output)
     public void start() {
         while (!areAllPassengersOnTheirDestinationFloors()) {
-            FrontEndMaker.printBuildingStateToConsole(this);
-            FrontEndMaker.printBuildingStateToFile(this);
+            BuildingStatePrinter.printBuildingStateToConsole(this);
+            BuildingStatePrinter.printBuildingStateToFile(this);
 
             elevator.dropAndPickUpPassengers();
             elevator.changeDirectionOfMoveIfItIsNecessary();
             elevator.move();
         }
-        FrontEndMaker.printBuildingStateToConsole(this);
-        FrontEndMaker.printBuildingStateToFile(this);
+        BuildingStatePrinter.printBuildingStateToConsole(this);
+        BuildingStatePrinter.printBuildingStateToFile(this);
 
         System.out.println(">>> ATTENTION! <<<");
         System.out.println("The output can be found also in txt file on path:"
-                + new File(FrontEndMaker.OUTPUT_FILE_NAME).getAbsolutePath());
+                + new File(BuildingStatePrinter.OUTPUT_FILE_NAME).getAbsolutePath());
 
     }
 
