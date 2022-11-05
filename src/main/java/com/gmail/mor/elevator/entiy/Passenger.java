@@ -10,8 +10,6 @@ public class Passenger {
 
     //Passenger destination floor
     private int destinationFloor;
-    //Number of actual passenger's floor
-    private int position;
 
     //Constructor
     public Passenger() {
