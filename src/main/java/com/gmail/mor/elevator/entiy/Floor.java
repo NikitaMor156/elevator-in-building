@@ -14,7 +14,7 @@ public class Floor {
     public Floor(int number) {
         this.number = number;
         int passengerCount = (int) (Math.random() * 10 + 1);
-        this.passengers = EntityGenerator.generatePassengersList(passengerCount, number);
+        this.passengers = EntityGenerator.generatePassengersList(passengerCount);
     }
 
     public void addPassenger(Passenger passenger) {

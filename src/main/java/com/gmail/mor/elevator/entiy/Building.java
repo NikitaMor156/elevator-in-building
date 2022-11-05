@@ -34,15 +34,17 @@ public class Building {
     //destination floors and elevator is empty.
     //Otherwise, returns false.
     public boolean areAllPassengersOnTheirDestinationFloors() {
-        boolean isDone = true;
-        List<Passenger> allPassengers = getAllPassengers();
-        for (Passenger p : allPassengers) {
-            if (p.getDestinationFloor() != p.getPosition()) {
-                isDone = false;
-                break;
+        if (!elevator.isEmpty()){
+            return false;
+        }
+        for (Floor floor : floorList){
+            for (Passenger p : floor.getPassengers()){
+                if (p.getDestinationFloor() != floor.getNumber()){
+                    return false;
+                }
             }
         }
-        return isDone && elevator.getPassengerList().isEmpty();
+        return true;
     }
 
     //Returns list of all passengers which are present in the building and elevator.

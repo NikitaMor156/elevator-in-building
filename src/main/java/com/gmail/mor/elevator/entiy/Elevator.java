@@ -50,9 +50,6 @@ public class Elevator {
         } else {
             position--;
         }
-        for (Passenger p : passengerList) {
-            p.setPosition(position);
-        }
     }
 
     //Returns true if elevator is called from above
@@ -122,7 +119,7 @@ public class Elevator {
     private void dropOffPassengers() {
         for (int i = 0; i < passengerList.size(); i++) {
             Passenger pas = passengerList.get(i);
-            if (pas.getDestinationFloor() == pas.getPosition()) {
+            if (pas.getDestinationFloor() == this.position) {
                 building.getFloor(position).addPassenger(pas);
                 this.passengerList.set(i,null);
             }

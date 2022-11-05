@@ -64,10 +64,9 @@ public class BuildingStatePrinter {
             sb.append(System.lineSeparator());
         }
         sb.append("elevator passengers: [");
-        //.append(building.getElevator().getPassengerList())
         for (Passenger pas : building.getElevator().getPassengerList()) {
             sb.append("p(")
-                    .append(pas.getDestinationFloor())
+                    .append(pas.getDestinationFloor() + 1)
                     .append("), ");
         }
         if (!building.getElevator().isEmpty()) {

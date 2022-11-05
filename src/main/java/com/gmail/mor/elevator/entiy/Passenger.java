@@ -14,8 +14,7 @@ public class Passenger {
     private int position;
 
     //Constructor
-    public Passenger(int position) {
-        this.position = position;
+    public Passenger() {
         this.destinationFloor = (int) (Math.random() * AppManager.FLOOR_COUNT);
     }
 }

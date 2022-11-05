@@ -13,10 +13,10 @@ public class EntityGenerator {
 
     //Return list with automatically generated Passenger objects.
     //This method takes variable floorPositionNumber for correct logic of Passenger objects
-    public static List<Passenger> generatePassengersList(int count, int floorPositionNumber) {
+    public static List<Passenger> generatePassengersList(int count) {
         List<Passenger> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            result.add(new Passenger(floorPositionNumber));
+            result.add(new Passenger());
         }
         return result;
     }
