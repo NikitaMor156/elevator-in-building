@@ -31,7 +31,7 @@ public class Floor {
 
     public boolean hasPassengersToTake(){
         for (Passenger pas : passengers){
-            if (pas.getPosition() != pas.getDestinationFloor()){
+            if (this.number != pas.getDestinationFloor()){
                 return true;
             }
         }
