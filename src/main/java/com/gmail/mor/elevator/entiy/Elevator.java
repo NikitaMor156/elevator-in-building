@@ -2,6 +2,9 @@ package com.gmail.mor.elevator.entiy;
 
 import com.gmail.mor.elevator.constants.AppManager;
 import com.gmail.mor.elevator.manager.ApplicationManager;
+import com.gmail.mor.elevator.manager.BuildingManager;
+import com.gmail.mor.elevator.manager.ElevatorManager;
+import com.gmail.mor.elevator.manager.FloorManager;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Data
 @Component("elevatorBean")
@@ -43,7 +48,7 @@ public class Elevator {
 
     public void move() {
         //If all passengers are on their places than elevator doesn't move
-        if (ApplicationManager.areAllPassengersOnTheirDestinationFloors(floorList) && this.isEmpty()) {
+        if (BuildingManager.areAllPassengersOnTheirDestinationFloors(floorList) && this.isEmpty()) {
             return;
         }
 
@@ -127,41 +132,48 @@ public class Elevator {
     }
 
     private void dropOffPassengers() {
-        for (int i = 0; i < passengerList.size(); i++) {
-            Passenger pas = passengerList.get(i);
-            if (pas.getDestinationFloor() == this.position) {
-                floorList.get(position).addPassenger(pas);
-                this.passengerList.set(i, null);
-            }
-        }
-        passengerList.removeIf(Objects::isNull);
+        List<Passenger> passengersToDrop = passengerList
+                .stream()
+                .filter(passenger -> passenger.getDestinationFloor() == position)
+                .toList();
+        FloorManager.addPassengers(floorList.get(position), passengersToDrop);
+        ElevatorManager.removePassengers(this, passengersToDrop);
     }
 
     private void takePassengers() {
-        List<Passenger> floorPassengers = floorList.get(position).getPassengers();
-        for (int i = 0; i < floorPassengers.size(); i++) {
-            Passenger pas = floorPassengers.get(i);
-            if (canTakePassenger(pas)) {
-                passengerList.add(pas);
-                floorPassengers.set(i, null);
-            }
+//        List<Passenger> floorPassengers = floorList.get(position).getPassengers();
+//        for (int i = 0; i < floorPassengers.size(); i++) {
+//            Passenger pas = floorPassengers.get(i);
+//            if (canTakePassenger(pas)) {
+//                passengerList.add(pas);
+//                floorPassengers.set(i, null);
+//            }
+//        }
+//        //delete null elements
+//        floorPassengers.removeIf(Objects::isNull);
+/////////////
+        if (passengerList.size() == maxSize){
+            return;
         }
-        //delete null elements
-        floorPassengers.removeIf(Objects::isNull);
+        List<Passenger> passengersToTake = floorList.get(position).getPassengers()
+                .stream()
+                .filter(passenger -> {
+                    if (isGoingUp && passenger.getDestinationFloor() > position) {
+                        return true;
+                    }
+                    if (!isGoingUp && passenger.getDestinationFloor() < position) {
+                        return true;
+                    }
+                    return false;
+                })
+                .toList();
+        ElevatorManager.addPassengers(this, passengersToTake);
+        FloorManager.removePassengers(floorList.get(position), passengersToTake);
+
     }
 
     public boolean isEmpty() {
         return passengerList.isEmpty();
     }
 
-    @Override
-    public String toString() {
-        return "Elevator{" +
-                "position=" + position +
-                ", passengerList=" + passengerList +
-                ", maxSize=" + maxSize +
-                ", isGoingUp=" + isGoingUp +
-                ", building=" + "AVOID OF DEATH LOOP CAUSED BY CIRCULAR DEPENDENCY!" +
-                '}';
-    }
 }

@@ -11,11 +11,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class ElevatorApplication {
 
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.register(Building.class);
-        context.register(Elevator.class);
-        context.register(BuildingStatePrinter.class);
-        context.refresh();
 
         ApplicationManager.startApplication();
 
