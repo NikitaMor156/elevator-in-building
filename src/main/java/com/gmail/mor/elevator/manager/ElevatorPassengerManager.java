@@ -5,7 +5,7 @@ import com.gmail.mor.elevator.entiy.Passenger;
 
 import java.util.List;
 
-public class ElevatorManager {
+public class ElevatorPassengerManager {
 
     public static void addPassenger(Elevator elevator, Passenger passenger) {
         elevator.getPassengerList().add(passenger);
@@ -25,6 +25,10 @@ public class ElevatorManager {
 
     public static void removePassengers(Elevator elevator, List<Passenger> passengerList) {
         elevator.getPassengerList().removeAll(passengerList);
+    }
+
+    public static boolean isElevatorEmpty(Elevator elevator) {
+        return elevator.getPassengerList().isEmpty();
     }
 
 }

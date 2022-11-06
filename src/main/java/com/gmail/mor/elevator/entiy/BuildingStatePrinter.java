@@ -2,6 +2,7 @@ package com.gmail.mor.elevator.entiy;
 
 import com.gmail.mor.elevator.file.FileCleaner;
 import com.gmail.mor.elevator.file.FileWriter;
+import com.gmail.mor.elevator.manager.ElevatorPassengerManager;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -69,7 +70,7 @@ public class BuildingStatePrinter {
                     .append(pas.getDestinationFloor() + 1)
                     .append("), ");
         }
-        if (!building.getElevator().isEmpty()) {
+        if (!ElevatorPassengerManager.isElevatorEmpty(building.getElevator())) {
             sb.delete(sb.length() - 2, sb.length());
         }
         sb.append("]")

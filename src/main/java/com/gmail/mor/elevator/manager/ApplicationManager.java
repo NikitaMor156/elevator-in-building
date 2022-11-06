@@ -10,17 +10,18 @@ public class ApplicationManager {
     //Starts elevator.
     //Provides transportation of passengers between floors.
     //Starts frontend part of application (console output + file output)
-    public static void startApplication(){
+    public static void startApplication() {
         Building building = new Building();
 
-        //TODO isDone method
-        while (!building.getElevator().isEmpty() || !BuildingManager.areAllPassengersOnTheirDestinationFloors(building)) {
+        while (!ElevatorPassengerManager.isElevatorEmpty(building.getElevator()) ||
+                !BuildingManager.areAllPassengersOnTheirDestinationFloors(building)) {
+
             BuildingStatePrinter.printBuildingStateToConsole(building);
             BuildingStatePrinter.printBuildingStateToFile(building);
 
-            building.getElevator().dropAndPickUpPassengers();
-            building.getElevator().changeDirectionOfMoveIfItIsNecessary();
-            building.getElevator().move();
+            building.getElevator().getLogic().dropAndPickUpPassengers();
+            building.getElevator().getLogic().changeDirectionOfMoveIfItIsNecessary();
+            building.getElevator().getLogic().move();
         }
         BuildingStatePrinter.printBuildingStateToConsole(building);
         BuildingStatePrinter.printBuildingStateToFile(building);
