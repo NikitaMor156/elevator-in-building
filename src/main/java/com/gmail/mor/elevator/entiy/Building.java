@@ -1,6 +1,6 @@
 package com.gmail.mor.elevator.entiy;
 
-import com.gmail.mor.elevator.EntityGenerator;
+import com.gmail.mor.elevator.generator.EntityGenerator;
 import com.gmail.mor.elevator.constants.AppManager;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,28 +74,6 @@ public class Building {
             result.add(floorList.get(i));
         }
         return result;
-    }
-
-    //Starts elevator.
-    //Provides transportation of passengers between floors.
-    //Starts frontend part of application (console output + file output)
-    //TODO Вынести этот метод в отдельный класс
-    public void start() {
-        while (!areAllPassengersOnTheirDestinationFloors()) {
-            BuildingStatePrinter.printBuildingStateToConsole(this);
-            BuildingStatePrinter.printBuildingStateToFile(this);
-
-            elevator.dropAndPickUpPassengers();
-            elevator.changeDirectionOfMoveIfItIsNecessary();
-            elevator.move();
-        }
-        BuildingStatePrinter.printBuildingStateToConsole(this);
-        BuildingStatePrinter.printBuildingStateToFile(this);
-
-        System.out.println(">>> ATTENTION! <<<");
-        System.out.println("The output can be found also in txt file on path:"
-                + new File(BuildingStatePrinter.OUTPUT_FILE_NAME).getAbsolutePath());
-
     }
 
     @Override

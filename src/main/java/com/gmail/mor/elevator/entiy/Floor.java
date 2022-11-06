@@ -1,6 +1,6 @@
 package com.gmail.mor.elevator.entiy;
 
-import com.gmail.mor.elevator.EntityGenerator;
+import com.gmail.mor.elevator.generator.EntityGenerator;
 import lombok.Data;
 
 import java.util.List;

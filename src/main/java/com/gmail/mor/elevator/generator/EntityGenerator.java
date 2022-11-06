@@ -1,4 +1,4 @@
-package com.gmail.mor.elevator;
+package com.gmail.mor.elevator.generator;
 
 import com.gmail.mor.elevator.entiy.Floor;
 import com.gmail.mor.elevator.entiy.Passenger;
