@@ -41,7 +41,7 @@ public class BuildingStatePrinter {
     //This method generates String which represents the state of all objects inside the building
     //at the moment
     private static String getProgramOutputString(Building building) {
-        List<Floor> floorList = building.getFloorList();
+        List<Floor> floorList = building.getFloors();
         StringBuilder sb = new StringBuilder();
         for (int i = floorList.size() - 1; i >= 0; i--) {
             if (building.getElevator().getPosition() == i) {

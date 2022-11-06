@@ -17,7 +17,7 @@ public class ElevatorApplication {
         context.register(BuildingStatePrinter.class);
         context.refresh();
 
-        ApplicationManager.startApplication(context.getBean("buildingBean", Building.class));
+        ApplicationManager.startApplication();
 
     }
 

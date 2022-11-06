@@ -1,7 +1,10 @@
 package com.gmail.mor.elevator.entiy;
 
 import com.gmail.mor.elevator.constants.AppManager;
+import com.gmail.mor.elevator.manager.ApplicationManager;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,18 +14,17 @@ import java.util.Objects;
 
 @Data
 @Component("elevatorBean")
+@NoArgsConstructor
 public class Elevator {
 
-    private int position;
-    private List<Passenger> passengerList;
+    private int position = 0;
+    private List<Passenger> passengerList = new ArrayList<>();
     private final int maxSize = AppManager.ELEVATOR_CAPACITY;
     private boolean isGoingUp = true;
-    @Autowired
-    Building building;
+    private List<Floor> floorList;
 
-    public Elevator() {
-        passengerList = new ArrayList<>();
-        position = 0;
+    public Elevator(List<Floor> floorList) {
+        this.floorList = floorList;
     }
 
     //Can we take this passenger onboard?
@@ -41,7 +43,7 @@ public class Elevator {
 
     public void move() {
         //If all passengers are on their places than elevator doesn't move
-        if (building.areAllPassengersOnTheirDestinationFloors()) {
+        if (ApplicationManager.areAllPassengersOnTheirDestinationFloors(floorList) && this.isEmpty()) {
             return;
         }
 
@@ -67,7 +69,7 @@ public class Elevator {
         if (position >= AppManager.FLOOR_COUNT - 1) {
             return false;
         }
-        List<Floor> floorsAbove = building.getFloors(position + 1, AppManager.FLOOR_COUNT - 1);
+        List<Floor> floorsAbove = floorList.subList(position + 1, AppManager.FLOOR_COUNT);
         for (Floor fl : floorsAbove) {
             if (fl.hasPassengersToTake()) {
                 return true;
@@ -89,7 +91,7 @@ public class Elevator {
         if (position <= 0) {
             return false;
         }
-        List<Floor> floorsBelow = building.getFloors(0, position - 1);
+        List<Floor> floorsBelow = floorList.subList(0, position);
         for (Floor fl : floorsBelow) {
             if (fl.hasPassengersToTake()) {
                 return true;
@@ -128,7 +130,7 @@ public class Elevator {
         for (int i = 0; i < passengerList.size(); i++) {
             Passenger pas = passengerList.get(i);
             if (pas.getDestinationFloor() == this.position) {
-                building.getFloor(position).addPassenger(pas);
+                floorList.get(position).addPassenger(pas);
                 this.passengerList.set(i, null);
             }
         }
@@ -136,7 +138,7 @@ public class Elevator {
     }
 
     private void takePassengers() {
-        List<Passenger> floorPassengers = building.getFloor(position).getPassengers();
+        List<Passenger> floorPassengers = floorList.get(position).getPassengers();
         for (int i = 0; i < floorPassengers.size(); i++) {
             Passenger pas = floorPassengers.get(i);
             if (canTakePassenger(pas)) {
