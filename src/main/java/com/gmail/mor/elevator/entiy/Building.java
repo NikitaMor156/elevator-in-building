@@ -1,13 +1,10 @@
 package com.gmail.mor.elevator.entiy;
 
 import com.gmail.mor.elevator.generator.EntityGenerator;
-import com.gmail.mor.elevator.constants.AppManager;
+import com.gmail.mor.elevator.constants.Conf;
 import lombok.Data;
-import lombok.NonNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //Building is class which contains list of Floor objects where passengers are and Elevator
@@ -26,7 +23,7 @@ public class Building {
     public Building() {
         //Generate random count of floors (floor list).
         //This floors will be automatically filled with random count of passengers.
-        floors = EntityGenerator.generateFloorList(AppManager.FLOOR_COUNT);
+        floors = EntityGenerator.generateFloorList(Conf.FLOOR_COUNT);
         elevator = new Elevator(floors);
     }
 }

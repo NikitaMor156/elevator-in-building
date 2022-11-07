@@ -1,11 +1,8 @@
 package com.gmail.mor.elevator.entiy;
 
-import com.gmail.mor.elevator.constants.AppManager;
+import com.gmail.mor.elevator.constants.Conf;
 import com.gmail.mor.elevator.generator.PassengerIdGenerator;
 import lombok.Data;
-import lombok.Generated;
-
-import javax.annotation.PostConstruct;
 
 @Data
 public class Passenger {
@@ -18,6 +15,6 @@ public class Passenger {
 
     //Constructor
     public Passenger() {
-        this.destinationFloor = (int) (Math.random() * AppManager.FLOOR_COUNT);
+        this.destinationFloor = (int) (Math.random() * Conf.FLOOR_COUNT);
     }
 }

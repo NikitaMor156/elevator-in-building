@@ -1,6 +1,6 @@
 package com.gmail.mor.elevator.manager;
 
-import com.gmail.mor.elevator.constants.AppManager;
+import com.gmail.mor.elevator.constants.Conf;
 import com.gmail.mor.elevator.entiy.Elevator;
 import com.gmail.mor.elevator.entiy.Floor;
 import com.gmail.mor.elevator.entiy.Passenger;
@@ -47,10 +47,10 @@ public class ElevatorMoveLogicManager {
     //(If the relevant call button pressed on the floor which is above the elevator.
     //That pressed button must have the same direction as elevator move direction, otherwise it will be ignored).
     private boolean isCalledFromAbove() {
-        if (elevator.getPosition() >= AppManager.FLOOR_COUNT - 1) {
+        if (elevator.getPosition() >= Conf.FLOOR_COUNT - 1) {
             return false;
         }
-        List<Floor> floorsAbove = elevator.getFloorList().subList(elevator.getPosition() + 1, AppManager.FLOOR_COUNT);
+        List<Floor> floorsAbove = elevator.getFloorList().subList(elevator.getPosition() + 1, Conf.FLOOR_COUNT);
         for (Floor fl : floorsAbove) {
             if (fl.hasPassengersToTake()) {
                 return true;
@@ -90,7 +90,7 @@ public class ElevatorMoveLogicManager {
         if (elevator.getPosition() == 0) {
             elevator.setGoingUp(true);
         }
-        if (elevator.getPosition() == AppManager.FLOOR_COUNT - 1) {
+        if (elevator.getPosition() == Conf.FLOOR_COUNT - 1) {
             elevator.setGoingUp(false);
         }
         if (elevator.isGoingUp() && !isCalledFromAbove()) {

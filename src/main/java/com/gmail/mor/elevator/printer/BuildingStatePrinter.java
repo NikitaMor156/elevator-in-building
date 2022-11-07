@@ -1,5 +1,9 @@
-package com.gmail.mor.elevator.entiy;
+package com.gmail.mor.elevator.printer;
 
+import com.gmail.mor.elevator.constants.Conf;
+import com.gmail.mor.elevator.entiy.Building;
+import com.gmail.mor.elevator.entiy.Floor;
+import com.gmail.mor.elevator.entiy.Passenger;
 import com.gmail.mor.elevator.file.FileCleaner;
 import com.gmail.mor.elevator.file.FileWriter;
 import com.gmail.mor.elevator.manager.ElevatorPassengerManager;
@@ -8,6 +12,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.util.List;
 
 //Class represents frontend part of application.
@@ -20,7 +25,7 @@ import java.util.List;
 public class BuildingStatePrinter {
 
     //Name of file for "frontend output".
-    public static final String OUTPUT_FILE_NAME = "log.txt";
+    public static final String DEFAULT_OUTPUT_FILE_NAME = Conf.OUTPUT_FILE_NAME;
 
     //Writes the result of getProgramOutputString(Building) method to console
     public static void printBuildingStateToConsole(Building building) {
@@ -30,8 +35,13 @@ public class BuildingStatePrinter {
     //Writes the result of getProgramOutputString(Building) method
     //to the file (OUTPUT_FILE_NAME variable of this class is file name)
     public static void printBuildingStateToFile(Building building) {
-        FileWriter.appendStringToFile(getProgramOutputString(building),OUTPUT_FILE_NAME);
+        FileWriter.appendStringToFile(getProgramOutputString(building),DEFAULT_OUTPUT_FILE_NAME);
     }
+
+    //TODO
+//    public static void printBuildingStateToFile(Building building, File file) {
+//        FileWriter.appendStringToFile(getProgramOutputString(building),file.getAbs???);
+//    }
 
     //This method generates String which represents the state of the building and it's elevator
     //at the moment
