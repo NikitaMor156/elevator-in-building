@@ -7,16 +7,16 @@ import com.gmail.mor.elevator.entiy.Passenger;
 
 import java.util.List;
 
-public class ElevatorLogicManager {
+public class ElevatorMoveLogicManager {
     private Elevator elevator;
 
-    public ElevatorLogicManager(Elevator elevator) {
+    public ElevatorMoveLogicManager(Elevator elevator) {
         this.elevator = elevator;
     }
 
-    public void workOneStep(){
-        dropOffPassengers();
-        takePassengers();
+    public void workOneStep() {
+        ElevatorPassengerManager.dropOffPassengers(elevator);
+        ElevatorPassengerManager.takePassengers(elevator);
         changeDirectionOfMoveIfItIsNecessary();
         move();
     }
@@ -34,6 +34,7 @@ public class ElevatorLogicManager {
             moveDown();
         }
     }
+
     private void moveUp() {
         elevator.setPosition(elevator.getPosition() + 1);
     }
@@ -98,44 +99,9 @@ public class ElevatorLogicManager {
         if (!elevator.isGoingUp() && !isCalledFromBelow()) {
             elevator.setGoingUp(true);
         }
-        dropAndPickUpPassengers();
+        ElevatorPassengerManager.dropOffPassengers(elevator);
+        ElevatorPassengerManager.takePassengers(elevator);
     }
 
-    public void dropAndPickUpPassengers() {
-        dropOffPassengers();
-        takePassengers();
-    }
-
-    private void dropOffPassengers() {
-        List<Passenger> passengersToDrop = elevator.getPassengers()
-                .stream()
-                .filter(passenger -> passenger.getDestinationFloor() == elevator.getPosition())
-                .toList();
-        FloorManager.addPassengers(elevator.getFloorList().get(elevator.getPosition()), passengersToDrop);
-        ElevatorPassengerManager.removePassengers(elevator, passengersToDrop);
-    }
-
-    private void takePassengers() {
-        if (elevator.getPassengers().size() == elevator.getCapacity()){
-            return;
-        }
-        int freeSlotsCount = elevator.getCapacity() - elevator.getPassengers().size();
-        List<Passenger> passengersToTake = elevator.getFloorList().get(elevator.getPosition()).getPassengers()
-                .stream()
-                .filter(passenger -> {
-                    if (elevator.isGoingUp() && passenger.getDestinationFloor() > elevator.getPosition()) {
-                        return true;
-                    }
-                    if (!elevator.isGoingUp() && passenger.getDestinationFloor() < elevator.getPosition()) {
-                        return true;
-                    }
-                    return false;
-                })
-                .limit(freeSlotsCount)
-                .toList();
-        ElevatorPassengerManager.addPassengers(elevator, passengersToTake);
-        FloorManager.removePassengers(elevator.getFloorList().get(elevator.getPosition()), passengersToTake);
-
-    }
 
 }
