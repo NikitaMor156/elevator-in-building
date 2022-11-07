@@ -22,12 +22,6 @@ public class BuildingStatePrinter {
     //Name of file for "frontend output".
     public static final String OUTPUT_FILE_NAME = "log.txt";
 
-    //Make log file empty every time before program run.
-    @PostConstruct
-    public void init() {
-        FileCleaner.clearFile(OUTPUT_FILE_NAME);
-    }
-
     //Writes the result of getProgramOutputString(Building) method to console
     public static void printBuildingStateToConsole(Building building) {
         System.out.print(getProgramOutputString(building));
@@ -39,7 +33,7 @@ public class BuildingStatePrinter {
         FileWriter.appendStringToFile(getProgramOutputString(building),OUTPUT_FILE_NAME);
     }
 
-    //This method generates String which represents the state of all objects inside the building
+    //This method generates String which represents the state of the building and it's elevator
     //at the moment
     private static String getProgramOutputString(Building building) {
         List<Floor> floorList = building.getFloors();
@@ -65,7 +59,7 @@ public class BuildingStatePrinter {
             sb.append(System.lineSeparator());
         }
         sb.append("elevator passengers: [");
-        for (Passenger pas : building.getElevator().getPassengerList()) {
+        for (Passenger pas : building.getElevator().getPassengers()) {
             sb.append("p(")
                     .append(pas.getDestinationFloor() + 1)
                     .append("), ");

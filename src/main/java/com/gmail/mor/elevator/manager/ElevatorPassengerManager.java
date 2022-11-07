@@ -8,27 +8,27 @@ import java.util.List;
 public class ElevatorPassengerManager {
 
     public static void addPassenger(Elevator elevator, Passenger passenger) {
-        elevator.getPassengerList().add(passenger);
+        elevator.getPassengers().add(passenger);
     }
 
     public static void addPassengers(Elevator elevator, List<Passenger> passengerList) {
-        elevator.getPassengerList().addAll(passengerList);
+        elevator.getPassengers().addAll(passengerList);
     }
 
     public static void removePassenger(Elevator elevator, Passenger passenger) {
-        elevator.getPassengerList().remove(passenger);
+        elevator.getPassengers().remove(passenger);
     }
 
     public static void removePassenger(Elevator elevator, int index) {
-        elevator.getPassengerList().remove(index);
+        elevator.getPassengers().remove(index);
     }
 
     public static void removePassengers(Elevator elevator, List<Passenger> passengerList) {
-        elevator.getPassengerList().removeAll(passengerList);
+        elevator.getPassengers().removeAll(passengerList);
     }
 
     public static boolean isElevatorEmpty(Elevator elevator) {
-        return elevator.getPassengerList().isEmpty();
+        return elevator.getPassengers().isEmpty();
     }
 
 }

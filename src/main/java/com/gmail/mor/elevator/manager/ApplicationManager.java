@@ -1,7 +1,9 @@
 package com.gmail.mor.elevator.manager;
 
 import com.gmail.mor.elevator.entiy.*;
+import com.gmail.mor.elevator.file.FileCleaner;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.util.List;
 
@@ -11,6 +13,9 @@ public class ApplicationManager {
     //Provides transportation of passengers between floors.
     //Starts frontend part of application (console output + file output)
     public static void startApplication() {
+        //Make log file empty every time before program run.
+        FileCleaner.clearFile(BuildingStatePrinter.OUTPUT_FILE_NAME);
+
         Building building = new Building();
 
         while (!ElevatorPassengerManager.isElevatorEmpty(building.getElevator()) ||
@@ -19,9 +24,7 @@ public class ApplicationManager {
             BuildingStatePrinter.printBuildingStateToConsole(building);
             BuildingStatePrinter.printBuildingStateToFile(building);
 
-            building.getElevator().getLogic().dropAndPickUpPassengers();
-            building.getElevator().getLogic().changeDirectionOfMoveIfItIsNecessary();
-            building.getElevator().getLogic().move();
+            building.getElevator().getLogic().workOneStep();
         }
         BuildingStatePrinter.printBuildingStateToConsole(building);
         BuildingStatePrinter.printBuildingStateToFile(building);

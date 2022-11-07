@@ -14,6 +14,13 @@ public class ElevatorLogicManager {
         this.elevator = elevator;
     }
 
+    public void workOneStep(){
+        dropOffPassengers();
+        takePassengers();
+        changeDirectionOfMoveIfItIsNecessary();
+        move();
+    }
+
     public void move() {
         //If all passengers are on their places than elevator doesn't move
         if (BuildingManager.areAllPassengersOnTheirDestinationFloors(elevator.getFloorList()) &&
@@ -49,7 +56,7 @@ public class ElevatorLogicManager {
             }
         }
         //Если кто-то из пассажиров лифта хочет наверх
-        for (Passenger pas : elevator.getPassengerList()) {
+        for (Passenger pas : elevator.getPassengers()) {
             if (pas.getDestinationFloor() > elevator.getPosition()) {
                 return true;
             }
@@ -70,7 +77,7 @@ public class ElevatorLogicManager {
                 return true;
             }
         }
-        for (Passenger pas : elevator.getPassengerList()) {
+        for (Passenger pas : elevator.getPassengers()) {
             if (pas.getDestinationFloor() < elevator.getPosition()) {
                 return true;
             }
@@ -100,7 +107,7 @@ public class ElevatorLogicManager {
     }
 
     private void dropOffPassengers() {
-        List<Passenger> passengersToDrop = elevator.getPassengerList()
+        List<Passenger> passengersToDrop = elevator.getPassengers()
                 .stream()
                 .filter(passenger -> passenger.getDestinationFloor() == elevator.getPosition())
                 .toList();
@@ -109,9 +116,10 @@ public class ElevatorLogicManager {
     }
 
     private void takePassengers() {
-        if (elevator.getPassengerList().size() == elevator.getMaxSize()){
+        if (elevator.getPassengers().size() == elevator.getCapacity()){
             return;
         }
+        int freeSlotsCount = elevator.getCapacity() - elevator.getPassengers().size();
         List<Passenger> passengersToTake = elevator.getFloorList().get(elevator.getPosition()).getPassengers()
                 .stream()
                 .filter(passenger -> {
@@ -123,6 +131,7 @@ public class ElevatorLogicManager {
                     }
                     return false;
                 })
+                .limit(freeSlotsCount)
                 .toList();
         ElevatorPassengerManager.addPassengers(elevator, passengersToTake);
         FloorManager.removePassengers(elevator.getFloorList().get(elevator.getPosition()), passengersToTake);
