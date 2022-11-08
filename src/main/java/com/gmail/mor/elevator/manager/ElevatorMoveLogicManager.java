@@ -17,7 +17,12 @@ public class ElevatorMoveLogicManager {
     public void workOneStep() {
         ElevatorPassengerManager.dropOffPassengers(elevator);
         ElevatorPassengerManager.takePassengers(elevator);
+
         changeDirectionOfMoveIfItIsNecessary();
+
+        ElevatorPassengerManager.dropOffPassengers(elevator);
+        ElevatorPassengerManager.takePassengers(elevator);
+
         move();
     }
 
@@ -99,8 +104,10 @@ public class ElevatorMoveLogicManager {
         if (!elevator.isGoingUp() && !isCalledFromBelow()) {
             elevator.setGoingUp(true);
         }
-        ElevatorPassengerManager.dropOffPassengers(elevator);
-        ElevatorPassengerManager.takePassengers(elevator);
+    }
+
+    public Floor getCurrentFloor() {
+        return elevator.getFloorList().get(elevator.getPosition());
     }
 
 

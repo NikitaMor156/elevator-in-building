@@ -21,17 +21,17 @@ public class Floor {
         passengers.add(passenger);
     }
 
-    public void removePassenger(Passenger passenger){
+    public void removePassenger(Passenger passenger) {
         passengers.remove(passenger);
     }
 
-    public void removePassenger(int index){
+    public void removePassenger(int index) {
         passengers.remove(index);
     }
 
-    public boolean hasPassengersToTake(){
-        for (Passenger pas : passengers){
-            if (this.number != pas.getDestinationFloor()){
+    public boolean hasPassengersToTake() {
+        for (Passenger pas : passengers) {
+            if (this.number != pas.getDestinationFloor()) {
                 return true;
             }
         }

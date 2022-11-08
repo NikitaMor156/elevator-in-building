@@ -35,12 +35,12 @@ public class BuildingStatePrinter {
     //Writes the result of getProgramOutputString(Building) method
     //to the file (OUTPUT_FILE_NAME variable of this class is file name)
     public static void printBuildingStateToFile(Building building) {
-        FileWriter.appendStringToFile(getProgramOutputString(building),DEFAULT_OUTPUT_FILE_NAME);
+        FileWriter.appendStringToFile(getProgramOutputString(building), DEFAULT_OUTPUT_FILE_NAME);
     }
 
     //TODO
     public static void printBuildingStateToFile(Building building, File file) {
-        FileWriter.appendStringToFile(getProgramOutputString(building),file.getAbsolutePath());
+        FileWriter.appendStringToFile(getProgramOutputString(building), file.getAbsolutePath());
     }
 
     //This method generates String which represents the state of the building and it's elevator
