@@ -86,16 +86,23 @@ public class ElevatorMoveLogicManager {
         return false;
     }
 
+    //Change elevator move direction if it is necessary
     public void changeDirectionOfMoveIfItIsNecessary() {
+        //If elevator is on 1-st floor (ground-floor)
         if (elevator.getPosition() == 0) {
             elevator.setGoingUp(true);
         }
+        //If elevator is on last floor
         if (elevator.getPosition() == Conf.FLOOR_COUNT - 1) {
             elevator.setGoingUp(false);
         }
+        //If elevator is called from any floor which is above the elevator current
+        //position and elevator moves up at the moment
         if (elevator.isGoingUp() && !isCalledFromAbove()) {
             elevator.setGoingUp(false);
         }
+        //If elevator is called from any floor which is below the elevator current
+        //position and elevator moves down at the moment
         if (!elevator.isGoingUp() && !isCalledFromBelow()) {
             elevator.setGoingUp(true);
         }

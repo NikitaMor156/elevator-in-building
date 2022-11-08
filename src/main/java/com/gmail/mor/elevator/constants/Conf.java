@@ -12,7 +12,7 @@ public class Conf {
     public static final int FLOOR_COUNT = (int) (Math.random() * (MAX_FLOOR_COUNT - MIN_FLOOR_COUNT) + MIN_FLOOR_COUNT);
     //Capacity of elevator
     public static final int ELEVATOR_CAPACITY = 5;
-
+    //Output file name
     public static final String OUTPUT_FILE_NAME = "output.txt";
 
 
