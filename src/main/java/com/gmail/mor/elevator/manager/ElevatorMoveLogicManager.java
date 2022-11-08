@@ -35,10 +35,12 @@ public class ElevatorMoveLogicManager {
         }
     }
 
+    //Moves elevator 1 floor up
     private void moveUp() {
         elevator.setPosition(elevator.getPosition() + 1);
     }
 
+    //Moves elevator 1 floor down
     private void moveDown() {
         elevator.setPosition(elevator.getPosition() - 1);
     }
