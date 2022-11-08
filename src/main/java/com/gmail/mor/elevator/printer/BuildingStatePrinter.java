@@ -39,9 +39,9 @@ public class BuildingStatePrinter {
     }
 
     //TODO
-//    public static void printBuildingStateToFile(Building building, File file) {
-//        FileWriter.appendStringToFile(getProgramOutputString(building),file.getAbs???);
-//    }
+    public static void printBuildingStateToFile(Building building, File file) {
+        FileWriter.appendStringToFile(getProgramOutputString(building),file.getAbsolutePath());
+    }
 
     //This method generates String which represents the state of the building and it's elevator
     //at the moment

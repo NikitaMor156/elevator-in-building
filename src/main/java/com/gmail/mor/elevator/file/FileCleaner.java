@@ -3,6 +3,7 @@ package com.gmail.mor.elevator.file;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
@@ -18,6 +19,10 @@ public class FileCleaner {
             e.printStackTrace();
         }
 
+    }
+
+    public static void clearFile(File file) {
+        clearFile(file.getAbsolutePath());
     }
 
 }
