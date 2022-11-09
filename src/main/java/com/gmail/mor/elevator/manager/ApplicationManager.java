@@ -40,7 +40,9 @@ public class ApplicationManager {
         //Print state of building and all objects inside it to output file (default value - "output.txt")
         BuildingStateWriter.printBuildingStateToDefaultFile(building);
 
+        //Print legend to console
         BuildingStateWriter.printLegendToConsole();
+        //Print legend to default output file
         BuildingStateWriter.printLegendToDefaultFile();
 
         System.out.println(">>> ATTENTION! <<<");
