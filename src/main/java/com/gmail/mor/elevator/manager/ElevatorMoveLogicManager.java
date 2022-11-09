@@ -23,7 +23,7 @@ public class ElevatorMoveLogicManager {
 
     public void move() {
         //If all passengers are on their places than elevator doesn't move
-        if (BuildingManager.areAllPassengersOnTheirDestinationFloors(elevator.getFloorList()) &&
+        if (BuildingPassengerManager.areAllPassengersOnTheirDestinationFloors(elevator.getFloorList()) &&
                 ElevatorPassengerManager.isElevatorEmpty(elevator)) {
             return;
         }

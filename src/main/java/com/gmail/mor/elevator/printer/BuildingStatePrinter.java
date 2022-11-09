@@ -4,14 +4,12 @@ import com.gmail.mor.elevator.constants.Conf;
 import com.gmail.mor.elevator.entiy.Building;
 import com.gmail.mor.elevator.entiy.Floor;
 import com.gmail.mor.elevator.entiy.Passenger;
-import com.gmail.mor.elevator.file.FileCleaner;
 import com.gmail.mor.elevator.file.FileWriter;
 import com.gmail.mor.elevator.manager.ElevatorPassengerManager;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.util.List;
 
@@ -19,6 +17,10 @@ import java.util.List;
 //This is a sequence of states of the building,
 //where each new slide is the movement of the elevator to 1 floor. Every movement is called step.
 //Its public methods are used to print "frontend output" to .txt file or to console.
+
+//This class represents frontend part of application.
+//It is created to print current state of Building object and all it's internal objects.
+//And also it's methods write this output to file or console.
 @Data
 @Component
 @NoArgsConstructor
@@ -34,11 +36,11 @@ public class BuildingStatePrinter {
 
     //Writes the result of getProgramOutputString(Building) method
     //to the file (OUTPUT_FILE_NAME variable of this class is file name)
-    public static void printBuildingStateToFile(Building building) {
+    public static void printBuildingStateToDefaultFile(Building building) {
         FileWriter.appendStringToFile(getProgramOutputString(building),DEFAULT_OUTPUT_FILE_NAME);
     }
 
-    //TODO
+    //Writes the result of getProgramOutputString(Building) method to defined file
     public static void printBuildingStateToFile(Building building, File file) {
         FileWriter.appendStringToFile(getProgramOutputString(building),file.getAbsolutePath());
     }

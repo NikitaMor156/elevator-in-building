@@ -37,7 +37,7 @@ public class ElevatorPassengerManager {
                 .stream()
                 .filter(passenger -> passenger.getDestinationFloor() == elevator.getPosition())
                 .toList();
-        FloorManager.addPassengers(elevator.getFloorList().get(elevator.getPosition()), passengersToDrop);
+        FloorPassengerManager.addPassengers(elevator.getFloorList().get(elevator.getPosition()), passengersToDrop);
         ElevatorPassengerManager.removePassengers(elevator, passengersToDrop);
     }
 
@@ -60,7 +60,7 @@ public class ElevatorPassengerManager {
                 .limit(freeSlotsCount)
                 .toList();
         ElevatorPassengerManager.addPassengers(elevator, passengersToTake);
-        FloorManager.removePassengers(elevator.getFloorList().get(elevator.getPosition()), passengersToTake);
+        FloorPassengerManager.removePassengers(elevator.getFloorList().get(elevator.getPosition()), passengersToTake);
 
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 public class EntityGenerator {
 
     //Return list with automatically generated Passenger objects.
-    //This method takes variable floorPositionNumber for correct logic of Passenger objects
+    //Usually used to fill list of passengers of Floor class objects.
     public static List<Passenger> generatePassengersList(int count) {
         List<Passenger> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -21,8 +21,8 @@ public class EntityGenerator {
         return result;
     }
 
-    //Returns list of automatically generated Floor objects
-    //That floors would be
+    //Returns list of automatically generated list of Floor objects
+    //That floors' passenger lists would be automatically filled with Passenger objects
     public static List<Floor> generateFloorList(int count) {
         List<Floor> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {
