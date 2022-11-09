@@ -62,16 +62,14 @@ public class BuildingStateWriter {
 
     //Returns string with legend
     private static String getLegendString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Legend:")
-                .append(System.lineSeparator())
-                .append("'^' - elevator is going up")
-                .append(System.lineSeparator())
-                .append("'-' - elevator is going down")
-                .append(System.lineSeparator())
-                .append("'p(<passenger's destination floor>)' - passenger")
-                .append(System.lineSeparator());
-        return sb.toString();
+        return "Legend:" +
+                System.lineSeparator() +
+                "'^' - elevator is going up" +
+                System.lineSeparator() +
+                "'v' - elevator is going down" +
+                System.lineSeparator() +
+                "'p(<passenger's destination floor>)' - passenger" +
+                System.lineSeparator();
     }
 
     //This method generates String which represents the state of the building and it's elevator
@@ -84,7 +82,7 @@ public class BuildingStateWriter {
                 if (building.getElevator().isGoingUp()) {
                     sb.append("^");
                 } else {
-                    sb.append("-");
+                    sb.append("v");
                 }
             } else {
                 sb.append(" ");
