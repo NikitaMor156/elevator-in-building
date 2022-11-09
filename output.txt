@@ -2,6 +2,12 @@ THIS IS JUST EXAMPLE.
 PROGRAM OUTPUT WILL BE STORED HERE.
 ALL YOU NEED IS JUST TO RUN MAIN METHOD OF ElevatorApplication CLASS.
 
+Legend:
+'^' - elevator is going up
+'v' - elevator is going down
+'p(<passenger's destination floor>)' - passenger
+
+
  |6-st fl.| p(3) p(3) p(5) p(6) p(4) p(4) p(2)
  |5-st fl.| p(1) p(1) p(5) p(4) p(3) p(6) p(3) p(6) p(6) 
  |4-st fl.| p(6) p(6) 
