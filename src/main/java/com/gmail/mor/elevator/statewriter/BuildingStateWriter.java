@@ -1,4 +1,4 @@
-package com.gmail.mor.elevator.printer;
+package com.gmail.mor.elevator.statewriter;
 
 import com.gmail.mor.elevator.constants.Conf;
 import com.gmail.mor.elevator.entiy.Building;
@@ -24,7 +24,7 @@ import java.util.List;
 @Data
 @Component
 @NoArgsConstructor
-public class BuildingStatePrinter {
+public class BuildingStateWriter {
 
     //Name of file for "frontend output".
     public static final String DEFAULT_OUTPUT_FILE_NAME = Conf.OUTPUT_FILE_NAME;
@@ -43,6 +43,35 @@ public class BuildingStatePrinter {
     //Writes the result of getProgramOutputString(Building) method to defined file
     public static void printBuildingStateToFile(Building building, File file) {
         FileWriter.appendStringToFile(getProgramOutputString(building),file.getAbsolutePath());
+    }
+
+    //Print legend to console output
+    public static void printLegendToConsole(){
+        System.out.println(getLegendString());
+    }
+
+    //Print legend to default txt output file
+    public static void printLegendToDefaultFile(){
+        FileWriter.appendStringToFile(getLegendString(), DEFAULT_OUTPUT_FILE_NAME);
+    }
+
+    //Print legend to defined file
+    public static void printLegendToFile(File file){
+        FileWriter.appendStringToFile(getLegendString(),file);
+    }
+
+    //Returns string with legend
+    private static String getLegendString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Legend:")
+                .append(System.lineSeparator())
+                .append("'^' - elevator is going up")
+                .append(System.lineSeparator())
+                .append("'-' - elevator is going down")
+                .append(System.lineSeparator())
+                .append("'p(<passenger's destination floor>)' - passenger")
+                .append(System.lineSeparator());
+        return sb.toString();
     }
 
     //This method generates String which represents the state of the building and it's elevator
