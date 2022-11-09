@@ -28,7 +28,7 @@ public class ElevatorMoveLogicManager {
 
     public void move() {
         //If all passengers are on their places than elevator doesn't move
-        if (BuildingManager.areAllPassengersOnTheirDestinationFloors(elevator.getFloorList()) &&
+        if (BuildingPassengerManager.areAllPassengersOnTheirDestinationFloors(elevator.getFloorList()) &&
                 ElevatorPassengerManager.isElevatorEmpty(elevator)) {
             return;
         }
@@ -40,10 +40,12 @@ public class ElevatorMoveLogicManager {
         }
     }
 
+    //Moves elevator 1 floor up
     private void moveUp() {
         elevator.setPosition(elevator.getPosition() + 1);
     }
 
+    //Moves elevator 1 floor down
     private void moveDown() {
         elevator.setPosition(elevator.getPosition() - 1);
     }
@@ -91,16 +93,23 @@ public class ElevatorMoveLogicManager {
         return false;
     }
 
+    //Change elevator move direction if it is necessary
     public void changeDirectionOfMoveIfItIsNecessary() {
+        //If elevator is on 1-st floor (ground-floor)
         if (elevator.getPosition() == 0) {
             elevator.setGoingUp(true);
         }
+        //If elevator is on last floor
         if (elevator.getPosition() == Conf.FLOOR_COUNT - 1) {
             elevator.setGoingUp(false);
         }
+        //If elevator is called from any floor which is above the elevator current
+        //position and elevator moves up at the moment
         if (elevator.isGoingUp() && !isCalledFromAbove()) {
             elevator.setGoingUp(false);
         }
+        //If elevator is called from any floor which is below the elevator current
+        //position and elevator moves down at the moment
         if (!elevator.isGoingUp() && !isCalledFromBelow()) {
             elevator.setGoingUp(true);
         }

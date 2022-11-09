@@ -17,9 +17,9 @@ public class Building {
     private List<Floor> floors;
 
     //Elevator of this building
-    // @Autowired
     private Elevator elevator;
 
+    //Constructor
     public Building() {
         //Generate random count of floors (floor list).
         //This floors will be automatically filled with random count of passengers.

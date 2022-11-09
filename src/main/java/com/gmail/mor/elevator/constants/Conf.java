@@ -9,10 +9,10 @@ public class Conf {
     //Min floor count in building
     private static final int MIN_FLOOR_COUNT = 5;
     //Actual (random) floor count in building
-    public static final int FLOOR_COUNT = (int) (Math.random() * (MAX_FLOOR_COUNT - MIN_FLOOR_COUNT) + MIN_FLOOR_COUNT);
+    public static final int FLOOR_COUNT = (int) (Math.random() * (MAX_FLOOR_COUNT - MIN_FLOOR_COUNT) + MIN_FLOOR_COUNT + 1);
     //Capacity of elevator
     public static final int ELEVATOR_CAPACITY = 5;
-
+    //Output file name
     public static final String OUTPUT_FILE_NAME = "output.txt";
 
 

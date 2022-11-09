@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+//Class is used to write strings to txt files
 @Data
 public class FileWriter {
 
@@ -20,7 +21,7 @@ public class FileWriter {
             e.printStackTrace();
         }
     }
-
+    //Appends string to the file.
     public static void appendStringToFile(String text, File file) {
         appendStringToFile(text, file.getAbsolutePath());
     }
