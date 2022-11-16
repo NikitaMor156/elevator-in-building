@@ -5,7 +5,7 @@
 https://dataox.notion.site/Junior-Java-Developer-2208946fe5384e359f5d6a01a8286ad9
 
 
-### English version:
+# English version:
 
 # Test task for the position of Junior Java developer
 In this project, I tried to practice how to adhere to the SOLID principles as much as possible so that the code is readable, understandable and without repetition. It came out pretty good, in my opinion.
@@ -83,3 +83,5 @@ Try to use the language as much as possible when writing a program.
 All ambiguities can be interpreted independently (for example, where to go next if everyone left on a certain floor, but there are no more passengers on this floor).
 
 For the console program, make the output frame-by-frame - for each movement of the elevator one frame.
+
+Example - image on page https://dataox.notion.site/Junior-Java-Developer-2208946fe5384e359f5d6a01a8286ad9
